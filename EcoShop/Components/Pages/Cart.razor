@@ -1,0 +1,168 @@
+@page "/cart"
+@using EcoShop.Models
+@using EcoShop.Services
+@inject CartService CartService
+@inject StoreService StoreService
+@inject NavigationManager Nav
+@implements IDisposable
+
+<div class="container mt-4">
+    <h2 class="mb-4 fw-bold d-flex align-items-center gap-2">
+        <i class="bi bi-basket2-fill text-success"></i> Ваша корзина
+    </h2>
+
+    @if (!CartService.Items.Any())
+    {
+        <!-- Блок пустой корзины: Убрали bg-white, добавили card -->
+        <div class="card rounded-4 shadow-sm text-center py-5">
+            <div class="card-body">
+                <i class="bi bi-cart-x fs-1 text-muted"></i>
+                <p class="lead text-muted mt-3">Ваша корзина пока пуста.</p>
+                <a href="/" class="btn btn-primary rounded-pill px-4 mt-2">
+                    Перейти к покупкам
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <!-- Список товаров -->
+            <div class="col-lg-8 mb-4">
+                <!-- Таблица: Убрали bg-white, добавили card -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead style="background-color: var(--bg-main);">
+                                <tr>
+                                    <th class="ps-4" style="width: 45%">Товар</th>
+                                    <th class="text-center" style="width: 25%">Количество</th>
+                                    <th class="text-end pe-4" style="width: 30%">Цена</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in CartService.Items)
+                                {
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="rounded-3 border d-flex align-items-center justify-content-center me-3 overflow-hidden" 
+                                                     style="width: 60px; height: 60px; background-color: var(--bg-main);">
+                                                     <img src="@item.Product.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://placehold.co/60'">
+                                                </div>
+                                                <div>
+                                                    <div class="fw-bold">@item.Product.Name</div>
+                                                    <button class="btn btn-link text-danger p-0 text-decoration-none small" @onclick="() => CartService.RemoveItem(item.Product)">
+                                                        <i class="bi bi-trash"></i> Удалить
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <!-- Группа кнопок кол-ва -->
+                                            <div class="d-inline-flex align-items-center border rounded-pill p-1" style="border-color: var(--border-color) !important;">
+                                                <button class="btn btn-sm btn-icon rounded-circle" @onclick="() => CartService.DecreaseQuantity(item.Product)" style="width: 32px; height: 32px;">
+                                                    <i class="bi bi-dash text-muted"></i>
+                                                </button>
+                                                
+                                                <span class="fw-bold mx-3" style="min-width: 20px;">@item.Quantity</span>
+                                                
+                                                <button class="btn btn-sm btn-icon rounded-circle" @onclick="() => CartService.AddToCart(item.Product)" style="width: 32px; height: 32px;">
+                                                    <i class="bi bi-plus text-muted"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="text-end pe-4">
+                                            <div class="fw-bold text-success fs-5">@(item.Product.Price * item.Quantity) ₽</div>
+                                            <small class="text-muted">@item.Product.Price ₽ / шт.</small>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Итого и оформление -->
+            <div class="col-lg-4">
+                <!-- Карточка оформления: Убрали bg-white, добавили card -->
+                <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 20px;">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold mb-4">Оформление</h5>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom" style="border-color: var(--border-color) !important;">
+                            <span class="text-muted">Итого к оплате:</span>
+                            <span class="fs-2 fw-bold text-success">@CartService.TotalPrice ₽</span>
+                        </div>
+                        
+                        <EditForm Model="@orderModel" OnValidSubmit="PlaceOrder">
+                            <DataAnnotationsValidator />
+                            
+                            <div class="mb-3">
+                                <label class="small text-muted mb-1">Имя получателя</label>
+                                <InputText class="form-control rounded-3" @bind-Value="orderModel.CustomerName" placeholder="Иван" />
+                                <ValidationMessage For="@(() => orderModel.CustomerName)" class="text-danger small" />
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="small text-muted mb-1">Телефон</label>
+                                <InputText class="form-control rounded-3" @bind-Value="orderModel.CustomerPhone" placeholder="+7..." />
+                                <ValidationMessage For="@(() => orderModel.CustomerPhone)" class="text-danger small" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="small text-muted mb-1">Адрес доставки</label>
+                                <InputText class="form-control rounded-3" @bind-Value="orderModel.CustomerAddress" placeholder="Город, улица..." />
+                                <ValidationMessage For="@(() => orderModel.CustomerAddress)" class="text-danger small" />
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100 btn-lg rounded-pill shadow-sm py-3">
+                                Заказать
+                            </button>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    /* Локальный стиль для кнопок +/- чтобы они были красивыми в любой теме */
+    .btn-icon:hover {
+        background-color: var(--border-color);
+    }
+</style>
+
+@code {
+    private Order orderModel = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await CartService.InitializeAsync();
+            StateHasChanged();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        CartService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        CartService.OnChange -= StateHasChanged;
+    }
+
+    private async Task PlaceOrder()
+    {
+        orderModel.Items = new List<OrderItem>(CartService.Items);
+        StoreService.PlaceOrder(orderModel);
+        await CartService.ClearCart();
+        orderModel = new();
+        Nav.NavigateTo("/");
+    }
+}

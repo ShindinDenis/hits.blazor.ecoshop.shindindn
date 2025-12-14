@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+    /* --- СВЕТЛАЯ ТЕМА --- */
+    --eco-green: #2e7d32;
+    --eco-dark: #1b5e20;
+    --eco-light: #e8f5e9;
+    --bg-main: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-banner-box: rgba(255, 255, 255, 0.95);
+    --text-main: #212529;
+    --text-muted: #6c757d;
+    --border-color: rgba(0,0,0,0.08);
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+    --card-shadow: 0 5px 10px rgba(0,0,0,0.05);
+    --glow-color: rgba(46, 125, 50, 0.3);
+}
+
+[data-bs-theme="dark"] {
+    /* --- ТЁМНАЯ ТЕМА --- */
+    --eco-green: #66bb6a;
+    --eco-dark: #81c784;
+    --bg-main: #0f0f0f;
+    --bg-card: #1a1a1a;
+    --bg-banner-box: rgba(30, 30, 30, 0.95);
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-color: #333;
+    --input-bg: #252525;
+    --input-border: #404040;
+    --card-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    --glow-color: rgba(102, 187, 106, 0.4);
+}
+
+/* --- ОСНОВНЫЕ СТИЛИ --- */
+html { overflow-y: scroll; }
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+    transition: background 0.3s, color 0.3s;
+}
+h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; color: var(--text-main) !important; }
+a { text-decoration: none; transition: 0.2s; }
+.table { color: var(--text-main) !important; --bs-table-bg: transparent; }
+
+/* --- КАРТОЧКИ --- */
+.card, .product-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+.product-card {
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: var(--card-shadow);
+}
+.product-card:hover {
+    top: -10px;
+    box-shadow: 0 20px 40px -10px var(--glow-color);
+}
+.card-img-top-wrapper {
+    height: 240px;
+    background: var(--bg-main);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+}
+.card-img-top-wrapper img { transition: 0.6s; width: 100%; height: 100%; object-fit: cover; }
+.product-card:hover .card-img-top-wrapper img { transform: scale(1.08); }
+
+/* --- ФОРМЫ И ИНПУТЫ --- */
+.form-control, .form-select, .input-group-text, .search-box, .custom-select-trigger {
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    color: var(--text-main) !important;
+    transition: 0.3s;
+}
+
+/* Подсветка при фокусе (для инпутов и кастомных блоков) */
+.form-control:focus, 
+.input-group:focus-within,
+.search-box:focus-within {
+    border-color: var(--eco-green) !important;
+    box-shadow: 0 0 0 4px var(--glow-color) !important;
+}
+
+/* Заголовок баннера */
+.banner-title {
+    color: var(--eco-green) !important;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+/* --- КНОПКИ --- */
+.btn-primary { background: var(--eco-green); border: none; border-radius: 30px; }
+.btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+
+.btn-glow {
+    background: transparent;
+    border: 2px solid var(--eco-green);
+    color: var(--text-main);
+    border-radius: 50px;
+    padding: 10px 0;
+    font-weight: 600;
+    transition: 0.3s;
+    display: block; text-align: center;
+}
+.btn-glow:hover {
+    background: var(--eco-green); color: #fff;
+    box-shadow: 0 5px 15px var(--glow-color);
+    transform: translateY(-2px);
+}
+
+/* Кнопка корзины и класс анимации */
+.btn-cart, .btn-animated-pop {
+    position: relative; top: 0; transition: 0.3s;
+}
+.btn-cart {
+    background: var(--eco-green); border: none; border-radius: 30px;
+    font-weight: 600; color: white; padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.nav-item .btn-cart.active, .btn-cart:hover, .btn-animated-pop:hover {
+    top: -4px;
+    box-shadow: 0 10px 20px var(--glow-color);
+}
+
+/* --- АДМИНКА: DRAG & DROP --- */
+.drop-zone {
+    background: var(--bg-main);
+    border: 2px dashed var(--text-muted);
+    border-radius: 10px; padding: 20px;
+    text-align: center; position: relative;
+    transition: 0.3s; cursor: pointer;
+}
+.drop-zone:hover { border-color: var(--eco-green); }
+.drop-zone .form-control { cursor: pointer; }
+
+/* --- КАСТОМНЫЙ SELECT --- */
+.custom-select-wrapper { position: relative; user-select: none; }
+.custom-select-trigger {
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+}
+.custom-select-trigger:hover { border-color: var(--eco-green); }
+
+.custom-options {
+    position: absolute; top: 110%; left: 0; right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    z-index: 100; overflow: hidden;
+    max-height: 0; opacity: 0; transform: translateY(-10px);
+    transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    pointer-events: none;
+}
+.custom-options.open { max-height: 300px; opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+.custom-option { padding: 12px 20px; cursor: pointer; transition: background 0.2s; color: var(--text-main); }
+.custom-option:hover { background: var(--bg-main); color: var(--eco-green); }
+.custom-option.selected { background: var(--eco-green); color: white; }
+
+.arrow { transition: transform 0.3s; }
+.custom-select-wrapper.active .arrow { transform: rotate(180deg); }

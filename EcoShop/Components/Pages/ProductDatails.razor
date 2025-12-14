@@ -1,0 +1,182 @@
+@page "/product/{Id:int}"
+@using EcoShop.Models
+@using EcoShop.Services
+@inject StoreService Store
+@inject CartService Cart
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<div class="container mt-4 mb-5">
+    <!-- Навигация -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/" class="text-decoration-none text-muted">Каталог</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@(product?.Name ?? "...")</li>
+        </ol>
+    </nav>
+
+    @if (product != null)
+    {
+        <div class="row g-5">
+            <!-- ЛЕВАЯ КОЛОНКА -->
+            <div class="col-md-6">
+                <div class="rounded-4 overflow-hidden shadow-sm border position-relative" style="border-color: var(--border-color) !important;">
+                    <img src="@product.ImageUrl" class="img-fluid w-100" alt="@product.Name" 
+                         style="object-fit: cover; max-height: 500px;" 
+                         onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+                    
+                    <div class="position-absolute top-0 start-0 m-3">
+                        <span class="badge bg-success rounded-pill py-2 px-3 shadow-sm">
+                            @Store.GetCategories().FirstOrDefault(c => c.Id == product.CategoryId)?.Name
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПРАВАЯ КОЛОНКА -->
+            <div class="col-md-6 d-flex flex-column justify-content-center">
+                <h1 class="fw-bold mb-2">@product.Name</h1>
+                
+                <div class="mb-4 d-flex align-items-center gap-2">
+                    <div class="text-warning fs-5">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                             <i class="bi @(i <= Math.Round(product.AverageRating) ? "bi-star-fill" : "bi-star")"></i>
+                        }
+                    </div>
+                    <span class="text-muted small">(@product.Reviews.Count отзывов)</span>
+                </div>
+
+                <h2 class="text-success fw-bold mb-4 display-5">@product.Price ₽</h2>
+                
+                <p class="lead mb-5 text-muted" style="color: var(--text-main) !important;">@product.Description</p>
+
+                <div class="d-grid gap-3 d-md-flex">
+                    <button class="btn btn-primary btn-lg rounded-pill px-5 shadow-lg" @onclick="AddToCart">
+                        <i class="bi bi-cart-plus me-2"></i> В корзину
+                    </button>
+                    <a href="/" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+                        Назад
+                    </a>
+                </div>
+
+                @if (showSuccessMessage)
+                {
+                    <div class="alert alert-success mt-3 rounded-4 shadow-sm animate__animated animate__fadeIn">
+                        <i class="bi bi-check-circle-fill me-2"></i> Товар добавлен! <a href="cart" class="alert-link">В корзину</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <hr class="my-5" style="opacity: 0.1" />
+
+        <!-- ОТЗЫВЫ -->
+        <div class="row">
+            <div class="col-lg-7 mb-4">
+                <h3 class="mb-4 fw-bold">Отзывы покупателей</h3>
+                @if (!product.Reviews.Any())
+                {
+                    <div class="p-5 rounded-4 text-center border border-dashed" style="border-color: var(--border-color) !important; color: var(--text-muted);">
+                        <i class="bi bi-chat-square-text fs-1 mb-3 d-block"></i>
+                        Пока нет отзывов. Станьте первым!
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex flex-column gap-3">
+                        @foreach (var review in product.Reviews)
+                        {
+                            <div class="card border-0 shadow-sm rounded-4 p-3">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div class="fw-bold">@review.UserName</div>
+                                    <small class="text-muted">@review.Date.ToShortDateString()</small>
+                                </div>
+                                <div class="text-warning mb-2" style="font-size: 0.8rem;">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <i class="bi @(i <= review.Rating ? "bi-star-fill" : "bi-star")"></i>
+                                    }
+                                </div>
+                                <p class="mb-0 text-muted" style="color: var(--text-main) !important;">@review.Comment</p>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-lg rounded-4 sticky-top" style="top: 100px;">
+                    <div class="card-body p-4">
+                        <h4 class="card-title mb-4 fw-bold">Оставить отзыв</h4>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Ваша оценка</label>
+                            <div class="star-rating-picker mb-2">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    var starValue = i;
+                                    <i class="bi @(starValue <= newReview.Rating ? "bi-star-fill filled" : "bi-star") me-1 star-icon"
+                                          @onclick="() => newReview.Rating = starValue">
+                                    </i>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input class="form-control rounded-3 py-2" placeholder="Ваше имя" @bind="newReview.UserName" />
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control rounded-3 py-2" rows="3" placeholder="Комментарий..." @bind="newReview.Comment"></textarea>
+                        </div>
+                        <button class="btn btn-primary w-100 rounded-pill py-2" @onclick="SubmitReview" disabled="@string.IsNullOrWhiteSpace(newReview.UserName)">
+                            Отправить отзыв
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger mt-5">Товар не найден. <a href="/">Вернуться</a></div>
+    }
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private Product? product;
+    private ProductReview newReview = new() { Rating = 5 };
+    private bool showSuccessMessage = false;
+
+    protected override void OnInitialized()
+    {
+        product = Store.GetProductById(Id);
+    }
+
+    private void AddToCart()
+    {
+        if (product != null)
+        {
+            Cart.AddToCart(product);
+            showSuccessMessage = true;
+            var timer = new System.Timers.Timer(3000);
+            // ИСПРАВЛЕНИЕ: Добавлено "_ =" чтобы убрать предупреждение CS4014
+            timer.Elapsed += (s, e) => { 
+                showSuccessMessage = false; 
+                _ = InvokeAsync(StateHasChanged); 
+                timer.Dispose(); 
+            };
+            timer.Start();
+        }
+    }
+
+    private void SubmitReview()
+    {
+        if (product != null && !string.IsNullOrWhiteSpace(newReview.UserName))
+        {
+            Store.AddReview(product.Id, newReview);
+            newReview = new() { Rating = 5, UserName = "", Comment = "" };
+        }
+    }
+}

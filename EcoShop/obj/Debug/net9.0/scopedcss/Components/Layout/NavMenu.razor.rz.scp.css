@@ -1,0 +1,124 @@
+/* --- СТИЛИ ДЛЯ МОБИЛЬНОГО "ГАМБУРГЕРА" --- */
+.navbar-toggler[b-dki0qev67i] {
+    appearance: none;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 2.5rem;
+    color: white;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.navbar-toggler:checked[b-dki0qev67i] {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- ВЕРХНЯЯ ЧАСТЬ (БРЕНД) --- */
+.top-row[b-dki0qev67i] {
+    height: 3.5rem;
+    background-color: rgba(0, 0, 0, 0.15); 
+    backdrop-filter: blur(5px);
+}
+
+.navbar-brand[b-dki0qev67i] {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* --- ИКОНКИ (ИСПРАВЛЕНО ВЫРАВНИВАНИЕ) --- */
+.bi[b-dki0qev67i] {
+    display: inline-flex; /* Используем flex для самой иконки */
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    opacity: 0.9;
+    /* Убрали top и vertical-align, которые ломали центрирование */
+}
+
+/* --- ССЫЛКИ МЕНЮ --- */
+.nav-item[b-dki0qev67i] {
+    font-size: 1rem;
+    padding: 0.2rem 0.8rem;
+}
+
+.nav-item:first-of-type[b-dki0qev67i] {
+    padding-top: 1rem;
+}
+
+.nav-item:last-of-type[b-dki0qev67i] {
+    padding-bottom: 1rem;
+}
+
+/* Обычное состояние ссылки */
+.nav-item[b-dki0qev67i]  .nav-link {
+    color: rgba(255, 255, 255, 0.85); 
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    border-radius: 12px; 
+    height: 3rem;
+    width: 100%;
+    transition: all 0.2s ease;
+    
+    /* ГЛАВНОЕ ИСПРАВЛЕНИЕ ВЫРАВНИВАНИЯ: */
+    display: flex;
+    align-items: center; /* Вертикальный центр */
+}
+
+/* Текст внутри кнопки (дополнительная страховка) */
+.nav-item[b-dki0qev67i]  .nav-link span:not(.bi) {
+    line-height: 1.5;
+    padding-top: 1px; /* Микро-коррекция для шрифта, если нужно */
+}
+
+/* Состояние: Активная вкладка */
+.nav-item[b-dki0qev67i]  a.active {
+    background-color: rgba(255, 255, 255, 0.2); 
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
+}
+
+/* Состояние: Наведение мышкой */
+.nav-item[b-dki0qev67i]  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateX(3px);
+}
+
+/* Кнопка темы */
+.nav-item[b-dki0qev67i]  button.nav-link {
+    text-align: left;
+    width: 100%;
+}
+
+/* --- АДАПТИВНОСТЬ --- */
+.nav-scrollable[b-dki0qev67i] {
+    display: none;
+}
+
+.navbar-toggler:checked ~ .nav-scrollable[b-dki0qev67i] {
+    display: block;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-dki0qev67i] {
+        display: none;
+    }
+
+    .nav-scrollable[b-dki0qev67i] {
+        display: block;
+        height: calc(100vh - 3.5rem);
+        overflow-y: auto;
+    }
+}

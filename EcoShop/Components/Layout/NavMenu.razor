@@ -1,0 +1,88 @@
+﻿@using EcoShop.Services
+@inject ThemeService ThemeService
+@implements IDisposable
+@rendermode InteractiveServer
+
+<!-- Верхняя часть боковой панели (Бренд и гамбургер) -->
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            <i class="bi bi-tree-fill me-2"></i>EcoShop
+        </a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<!-- Скрываемая часть меню -->
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        
+        <!-- ССЫЛКИ -->
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Каталог
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="admin">
+                <span class="bi bi-gear-fill-nav-menu" aria-hidden="true"></span> Админ-панель
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="cart">
+                <span class="bi bi-basket2-fill-nav-menu" aria-hidden="true"></span> Корзина
+            </NavLink>
+        </div>
+
+        <!-- РАЗДЕЛИТЕЛЬ -->
+        <div class="nav-item px-3 mt-3">
+            <hr class="text-white-50" />
+        </div>
+
+        <!-- ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ (встроен в меню) -->
+        <div class="nav-item px-3">
+            <button class="nav-link btn btn-link text-start w-100" @onclick="ThemeService.ToggleThemeAsync" @onclick:stopPropagation>
+                @if (ThemeService.IsDarkMode)
+                {
+                    <span class="bi bi-moon-stars-fill" aria-hidden="true"></span> <span>Тёмная тема</span>
+                }
+                else
+                {
+                    <span class="bi bi-sun-fill" aria-hidden="true"></span> <span>Светлая тема</span>
+                }
+            </button>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override void OnInitialized()
+    {
+        ThemeService.OnChange += StateHasChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await ThemeService.InitializeAsync();
+        }
+    }
+
+    public void Dispose()
+    {
+        ThemeService.OnChange -= StateHasChanged;
+    }
+}
