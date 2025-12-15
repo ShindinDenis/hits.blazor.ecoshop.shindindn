@@ -177,3 +177,4 @@
 /home/denis/ООП/Sprint7_v2/EcoShop/EcoShop/obj/Debug/net9.0/EcoShop.pdb
 /home/denis/ООП/Sprint7_v2/EcoShop/EcoShop/obj/Debug/net9.0/EcoShop.genruntimeconfig.cache
 /home/denis/ООП/Sprint7_v2/EcoShop/EcoShop/obj/Debug/net9.0/ref/EcoShop.dll
+/home/denis/ООП/Sprint7_v2/EcoShop/EcoShop/obj/Debug/net9.0/compressed/bvd7ow9azd-{0}-zqltuijmmh-zqltuijmmh.gz
