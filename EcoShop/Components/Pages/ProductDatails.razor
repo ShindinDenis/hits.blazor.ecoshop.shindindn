@@ -154,11 +154,11 @@
         product = Store.GetProductById(Id);
     }
 
-    private void AddToCart()
+    private async Task AddToCart()
     {
         if (product != null)
         {
-            Cart.AddToCart(product);
+            await Cart.AddToCart(product);
             showSuccessMessage = true;
             var timer = new System.Timers.Timer(3000);
             // ИСПРАВЛЕНИЕ: Добавлено "_ =" чтобы убрать предупреждение CS4014
