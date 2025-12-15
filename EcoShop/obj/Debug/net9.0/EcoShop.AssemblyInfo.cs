@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EcoShop")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca0493f7ac51533d3e561de25bad69a529894f2d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+28d264aa507c91848a4011f415a5d7f20b027faf")]
 [assembly: System.Reflection.AssemblyProductAttribute("EcoShop")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EcoShop")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

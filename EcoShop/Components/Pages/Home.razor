@@ -8,11 +8,9 @@
 
 <!-- Баннер -->
 <div class="p-5 mb-5 rounded-4 shadow-sm text-center position-relative overflow-hidden" 
-     style="background: url('https://placehold.co/1200x300/2e7d32/2e7d32') no-repeat center center; background-size: cover;">
-    
+     style="background: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%271200%27 height=%27300%27%3e%3crect width=%27100%25%27 height=%27100%25%27 fill=%27%232e7d32%27/%3e%3c/svg%3e') no-repeat center center; background-size: cover;">
     <div class="d-inline-block p-4 p-md-5 rounded-4 shadow-lg" 
          style="background-color: var(--bg-banner-box); backdrop-filter: blur(5px);">
-        
         <h1 class="banner-title">Зеленое будущее</h1>
         <p class="fs-4 mx-auto mb-0" style="color: var(--text-main)">Товары для осознанной жизни</p>
     </div>
@@ -21,47 +19,20 @@
 <div class="container mb-5">
     <!-- Панель поиска и фильтров -->
     <div class="row mb-5 g-3 align-items-center">
-        
-        <!-- ПОИСК -->
         <div class="col-md-8">
             <div class="input-group search-box rounded-pill overflow-hidden">
-                <span class="input-group-text bg-transparent border-0 ps-4">
-                    <i class="bi bi-search"></i>
-                </span>
-                <input class="form-control bg-transparent border-0 py-3 shadow-none" 
-                       placeholder="Найти товар..." 
-                       @bind="searchText" 
-                       @bind:event="oninput" 
-                       style="outline: none; box-shadow: none;" />
+                <span class="input-group-text bg-transparent border-0 ps-4"><i class="bi bi-search"></i></span>
+                <input class="form-control bg-transparent border-0 py-3 shadow-none" placeholder="Найти товар..." @bind="searchText" @bind:event="oninput" style="outline: none; box-shadow: none;" />
             </div>
         </div>
-
-        <!-- КАТЕГОРИИ (КАСТОМНЫЙ СПИСОК) -->
         <div class="col-md-4">
             <div class="custom-select-wrapper @(isDropdownOpen ? "active" : "")">
-                
-                <!-- Кнопка (Триггер) -->
-                <div class="custom-select-trigger rounded-pill py-3 px-4 shadow-sm" @onclick="ToggleDropdown">
-                    <span>@selectedCategoryName</span>
-                    <i class="bi bi-chevron-down arrow"></i>
-                </div>
-
-                <!-- Выпадающий список -->
+                <div class="custom-select-trigger rounded-pill py-3 px-4 shadow-sm" @onclick="ToggleDropdown"><span>@selectedCategoryName</span><i class="bi bi-chevron-down arrow"></i></div>
                 <div class="custom-options @(isDropdownOpen ? "open" : "")">
-                    <!-- Опция "Все" -->
-                    <!-- ИСПРАВЛЕНИЕ: Используем одинарные кавычки для HTML-атрибута, чтобы внутри использовать двойные для C# строки -->
-                    <div class="custom-option @(selectedCategoryId == 0 ? "selected" : "")" 
-                         @onclick='() => SelectCategory(0, "Все категории")'>
-                        Все категории
-                    </div>
-
-                    <!-- Динамические категории -->
+                    <div class="custom-option @(selectedCategoryId == 0 ? "selected" : "")" @onclick='() => SelectCategory(0, "Все категории")'>Все категории</div>
                     @foreach (var cat in Store.GetCategories())
                     {
-                        <div class="custom-option @(selectedCategoryId == cat.Id ? "selected" : "")" 
-                             @onclick="() => SelectCategory(cat.Id, cat.Name)">
-                            @cat.Name
-                        </div>
+                        <div class="custom-option @(selectedCategoryId == cat.Id ? "selected" : "")" @onclick="() => SelectCategory(cat.Id, cat.Name)">@cat.Name</div>
                     }
                 </div>
             </div>
@@ -71,10 +42,7 @@
     <!-- Список товаров -->
     @if (!FilteredProducts.Any())
     {
-        <div class="text-center py-5 opacity-50">
-            <i class="bi bi-search fs-1"></i>
-            <h3 class="mt-2">Ничего не найдено</h3>
-        </div>
+        <div class="text-center py-5 opacity-50"><i class="bi bi-search fs-1"></i><h3 class="mt-2">Ничего не найдено</h3></div>
     }
     else
     {
@@ -84,38 +52,15 @@
                 <div class="col">
                     <div class="card product-card h-100">
                         <div class="card-img-top-wrapper position-relative">
-                            <img src="@product.ImageUrl" alt="@product.Name" onerror="this.src='https://placehold.co/600x400?text=No+Image'">
-                            <div class="position-absolute bottom-0 end-0 m-3">
-                                <span class="badge bg-dark bg-opacity-75 rounded-pill py-2 px-3 backdrop-blur">
-                                    @product.Price ₽
-                                </span>
-                            </div>
+                            <img src="@product.ImageUrl" alt="@product.Name" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWNlY2VjIiLz48L3N2Zz4='">
+                            <div class="position-absolute bottom-0 end-0 m-3"><span class="badge bg-dark bg-opacity-75 rounded-pill py-2 px-3 backdrop-blur">@product.Price ₽</span></div>
                         </div>
-                        
                         <div class="card-body d-flex flex-column p-4">
-                            <div class="mb-2">
-                                <small class="text-success text-uppercase fw-bold" style="font-size: 0.7rem; letter-spacing: 1px;">
-                                    @Store.GetCategories().FirstOrDefault(c => c.Id == product.CategoryId)?.Name
-                                </small>
-                            </div>
-                            
+                            <div class="mb-2"><small class="text-success text-uppercase fw-bold" style="font-size: 0.7rem; letter-spacing: 1px;">@Store.GetCategories().FirstOrDefault(c => c.Id == product.CategoryId)?.Name</small></div>
                             <h5 class="card-title fw-bold mb-3">@product.Name</h5>
-
-                            <div class="mb-3">
-                                @for (int i = 1; i <= 5; i++)
-                                {
-                                    <i class="bi @(i <= Math.Round(product.AverageRating) ? "bi-star-fill" : "bi-star") text-warning" style="font-size: 0.9rem;"></i>
-                                }
-                                <small class="text-muted ms-2">(@product.Reviews.Count)</small>
-                            </div>
-
-                            <p class="card-text text-muted small flex-grow-1 mb-4">
-                                @(product.Description.Length > 55 ? product.Description.Substring(0, 55) + "..." : product.Description)
-                            </p>
-
-                            <a href="/product/@product.Id" class="btn-glow text-decoration-none mt-auto">
-                                Подробнее
-                            </a>
+                            <div class="mb-3">@for (int i = 1; i <= 5; i++){<i class="bi @(i <= Math.Round(product.AverageRating) ? "bi-star-fill" : "bi-star") text-warning" style="font-size: 0.9rem;"></i>}<small class="text-muted ms-2">(@product.Reviews.Count)</small></div>
+                            <p class="card-text text-muted small flex-grow-1 mb-4">@(product.Description.Length > 55 ? product.Description.Substring(0, 55) + "..." : product.Description)</p>
+                            <a href="/product/@product.Id" class="btn-glow text-decoration-none mt-auto">Подробнее</a>
                         </div>
                     </div>
                 </div>
@@ -127,21 +72,11 @@
 @code {
     private string searchText = "";
     private int selectedCategoryId = 0;
-    
     private bool isDropdownOpen = false;
     private string selectedCategoryName = "Все категории";
 
-    private void ToggleDropdown()
-    {
-        isDropdownOpen = !isDropdownOpen;
-    }
-
-    private void SelectCategory(int id, string name)
-    {
-        selectedCategoryId = id;
-        selectedCategoryName = name;
-        isDropdownOpen = false;
-    }
+    private void ToggleDropdown() => isDropdownOpen = !isDropdownOpen;
+    private void SelectCategory(int id, string name) { selectedCategoryId = id; selectedCategoryName = name; isDropdownOpen = false; }
 
     private IEnumerable<Product> FilteredProducts
     {

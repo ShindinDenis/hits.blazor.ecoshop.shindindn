@@ -2,6 +2,7 @@
 @using EcoShop.Models
 @using EcoShop.Services
 @using System.IO
+@using EcoShop.Utils
 @inject StoreService Store
 @inject IWebHostEnvironment Environment 
 @rendermode InteractiveServer
@@ -43,10 +44,8 @@
     @if (activeTab == "products")
     {
         <div class="row">
-            <!-- КОЛОНКА 1: ФОРМА (Создание / Редактирование) -->
+            <!-- КОЛОНКА 1: ФОРМА -->
             <div class="col-lg-4 mb-4">
-                
-                <!-- Категория (только при создании нового) -->
                 @if(newProduct.Id == 0) 
                 {
                     <div class="card shadow-sm border-0 rounded-4 mb-4">
@@ -54,121 +53,37 @@
                             <h6 class="card-title text-success mb-3">Новая категория</h6>
                             <div class="input-group">
                                 <input class="form-control" placeholder="Название..." @bind="newCategoryName" />
-                                <button class="btn btn-outline-success" @onclick="HandleAddCategory">
-                                    <i class="bi bi-plus-lg"></i>
-                                </button>
+                                <button class="btn btn-outline-success" @onclick="HandleAddCategory"><i class="bi bi-plus-lg"></i></button>
                             </div>
                         </div>
                     </div>
                 }
-
-                <!-- Товар -->
                 <div class="card shadow-sm border-0 rounded-4 @(newProduct.Id > 0 ? "border-primary border-2" : "")">
                     <div class="card-body">
                         <h5 class="card-title mb-3 d-flex justify-content-between align-items-center">
-                            @if (newProduct.Id == 0)
-                            {
-                                <span>Новый товар</span>
-                            }
-                            else
-                            {
-                                <span class="text-primary">Редактирование #@newProduct.Id</span>
-                                <button class="btn btn-sm btn-outline-secondary" @onclick="CancelEdit" title="Отмена">
-                                    <i class="bi bi-x-lg"></i>
-                                </button>
-                            }
+                            @if (newProduct.Id == 0) { <span>Новый товар</span> }
+                            else { <span class="text-primary">Редактирование #@newProduct.Id</span> <button class="btn btn-sm btn-outline-secondary" @onclick="CancelEdit" title="Отмена"><i class="bi bi-x-lg"></i></button> }
                         </h5>
-                        
                         <EditForm Model="newProduct" OnValidSubmit="HandleSubmitProduct">
-                            <DataAnnotationsValidator />
-                            <ValidationSummary class="text-danger small mb-2" />
-
+                            <DataAnnotationsValidator /><ValidationSummary class="text-danger small mb-2" />
                             <div class="mb-2"><label class="small text-muted">Название *</label><InputText @bind-Value="newProduct.Name" class="form-control" /></div>
-                            <div class="mb-2">
-                                <label class="small text-muted">Цена *</label>
-                                <InputNumber @bind-Value="newProduct.Price" class="form-control" ParsingErrorMessage="Введите числовое значение" />
-                            </div>
-                            <div class="mb-2">
-                                <label class="small text-muted">Категория</label>
-                                <InputSelect @bind-Value="newProduct.CategoryId" class="form-select">
-                                    @foreach(var cat in Store.GetCategories()) { <option value="@cat.Id">@cat.Name</option> }
-                                </InputSelect>
-                            </div>
-                            <div class="mb-3">
-                                <label class="small text-muted">Изображение</label>
-                                <div class="drop-zone mb-2" @ondragenter="() => isDragActive = true" @ondragleave="() => isDragActive = false">
-                                    <InputFile OnChange="HandleFileSelected" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" style="cursor: pointer;" accept=".jpg,.png,.jpeg" />
-                                    @if (uploadedImageName != null)
-                                    {
-                                        <div class="text-success py-3"><i class="bi bi-check-circle fs-4"></i><br/>@uploadedImageName</div>
-                                    }
-                                    else
-                                    {
-                                        <div class="py-3 @(isDragActive ? "text-success" : "text-muted")"><i class="bi bi-cloud-upload fs-2"></i><br/><span>Перетащите фото</span></div>
-                                    }
-                                </div>
-                                <InputText @bind-Value="imageUrlInput" class="form-control form-control-sm" placeholder="Или ссылка..." />
-                                
-                                @if (newProduct.Id > 0 && string.IsNullOrEmpty(uploadedImageName) && string.IsNullOrEmpty(imageUrlInput))
-                                {
-                                    <div class="mt-2 text-center">
-                                        <small class="text-muted">Текущее фото:</small><br/>
-                                        <img src="@newProduct.ImageUrl" height="60" class="rounded border mt-1" />
-                                    </div>
-                                }
-                            </div>
-                            
-                            <button type="submit" class="btn w-100 rounded-pill @(newProduct.Id == 0 ? "btn-success" : "btn-primary")">
-                                @(newProduct.Id == 0 ? "Добавить" : "Сохранить изменения")
-                            </button>
+                            <div class="mb-2"><label class="small text-muted">Цена *</label><InputNumber @bind-Value="newProduct.Price" class="form-control" ParsingErrorMessage="Введите числовое значение" /></div>
+                            <div class="mb-2"><label class="small text-muted">Категория</label><InputSelect @bind-Value="newProduct.CategoryId" class="form-select">@foreach(var cat in Store.GetCategories()) { <option value="@cat.Id">@cat.Name</option> }</InputSelect></div>
+                            <div class="mb-3"><label class="small text-muted">Изображение</label><div class="drop-zone mb-2" @ondragenter="() => isDragActive = true" @ondragleave="() => isDragActive = false"><InputFile OnChange="HandleFileSelected" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" style="cursor: pointer;" accept=".jpg,.png,.jpeg" />@if (uploadedImageName != null){<div class="text-success py-3"><i class="bi bi-check-circle fs-4"></i><br/>@uploadedImageName</div>}else{<div class="py-3 @(isDragActive ? "text-success" : "text-muted")"><i class="bi bi-cloud-upload fs-2"></i><br/><span>Перетащите фото</span></div>}</div><InputText @bind-Value="imageUrlInput" class="form-control form-control-sm" placeholder="Или ссылка..." />@if (newProduct.Id > 0 && string.IsNullOrEmpty(uploadedImageName) && string.IsNullOrEmpty(imageUrlInput)){<div class="mt-2 text-center"><small class="text-muted">Текущее фото:</small><br/><img src="@newProduct.ImageUrl" height="60" class="rounded border mt-1" /></div>}</div>
+                            <button type="submit" class="btn w-100 rounded-pill @(newProduct.Id == 0 ? "btn-success" : "btn-primary")">@(newProduct.Id == 0 ? "Добавить" : "Сохранить изменения")</button>
                         </EditForm>
                     </div>
                 </div>
             </div>
-
-            <!-- КОЛОНКА 2: ТАБЛИЦА ТОВАРОВ -->
+            <!-- КОЛОНКА 2: ТАБЛИЦА -->
             <div class="col-lg-8">
-                <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0 align-middle">
-                            <thead style="background-color: var(--bg-main);">
-                                <tr>
-                                    <th class="ps-4">Фото</th>
-                                    <th>Инфо</th>
-                                    <th>Цена</th>
-                                    <th class="text-end pe-4">Действия</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach(var p in Store.GetProducts().OrderByDescending(x => x.Id))
-                                {
-                                    <tr class="@(newProduct.Id == p.Id ? "table-active" : "")">
-                                        <td class="ps-4" style="width: 80px;"><div class="rounded overflow-hidden border" style="width: 50px; height: 50px;"><img src="@p.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://placehold.co/50'"></div></td>
-                                        <td><div class="fw-bold">@p.Name</div><small class="text-muted">@Store.GetCategories().FirstOrDefault(c => c.Id == p.CategoryId)?.Name</small></td>
-                                        <td>@p.Price ₽</td>
-                                        <td class="text-end pe-4">
-                                            <!-- КНОПКА РЕДАКТИРОВАНИЯ -->
-                                            <button class="btn btn-sm btn-outline-primary rounded-circle me-1" @onclick="() => StartEdit(p)" title="Редактировать">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </button>
-                                            <!-- КНОПКА УДАЛЕНИЯ -->
-                                            <button class="btn btn-sm btn-outline-danger rounded-circle" @onclick="() => Store.DeleteProduct(p.Id)" title="Удалить">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <div class="card shadow-sm border-0 rounded-4 overflow-hidden"><div class="table-responsive"><table class="table table-hover mb-0 align-middle"><thead style="background-color: var(--bg-main);"><tr><th class="ps-4">Фото</th><th>Инфо</th><th>Цена</th><th class="text-end pe-4">Действия</th></tr></thead><tbody>@foreach(var p in Store.GetProducts().OrderByDescending(x => x.Id)){<tr class="@(newProduct.Id == p.Id ? "table-active" : "")"><td class="ps-4" style="width: 80px;"><div class="rounded overflow-hidden border" style="width: 50px; height: 50px;"><img src="@p.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWNlY2VjIiLz48L3N2Zz4='"></div></td><td><div class="fw-bold">@p.Name</div><small class="text-muted">@Store.GetCategories().FirstOrDefault(c => c.Id == p.CategoryId)?.Name</small></td><td>@p.Price ₽</td><td class="text-end pe-4"><button class="btn btn-sm btn-outline-primary rounded-circle me-1" @onclick="() => StartEdit(p)" title="Редактировать"><i class="bi bi-pencil-fill"></i></button><button class="btn btn-sm btn-outline-danger rounded-circle" @onclick="() => Store.DeleteProduct(p.Id)" title="Удалить"><i class="bi bi-trash"></i></button></td></tr>}</tbody></table></div></div>
             </div>
         </div>
     }
 
     @if (activeTab == "orders")
     {
-        /* КОД ВКЛАДКИ ЗАКАЗОВ ОСТАВЛЯЕМ БЕЗ ИЗМЕНЕНИЙ */
         <div class="row">
             <div class="col-12">
                 <h5 class="text-success mb-3">Новые заказы</h5>
@@ -178,34 +93,31 @@
                 }
                 else 
                 {
-                    @foreach(var order in activeOrders.OrderByDescending(o => o.OrderDate))
+                    @foreach(var order in activeOrders)
                     {
                        <div class="card shadow-sm border-success border-2 rounded-4 mb-3">
                             <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom">
                                 <div><span class="badge bg-success me-2">Новый</span><strong>#@order.Id</strong> <small class="text-muted ms-2">@order.OrderDate.ToString("g")</small></div>
                                 <button class="btn btn-sm btn-primary rounded-pill px-3" @onclick="() => Store.CompleteOrder(order.Id)"><i class="bi bi-check-lg"></i> Завершить</button>
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-4 mb-2"><h6 class="text-uppercase text-muted small fw-bold">Клиент</h6><div class="d-flex align-items-center mb-1"><i class="bi bi-person-fill me-2 text-muted"></i><span class="fw-bold">@order.CustomerName</span></div><div class="d-flex align-items-center mb-1"><i class="bi bi-telephone-fill me-2 text-muted"></i><span class="small">@order.CustomerPhone</span></div><div class="d-flex align-items-center"><i class="bi bi-geo-alt-fill me-2 text-muted"></i><span class="small">@order.CustomerAddress</span></div></div>
-                                    <div class="col-md-8"><h6 class="text-uppercase text-muted small fw-bold">Товары</h6><ul class="list-unstyled mb-0">@foreach(var item in order.Items){<li class="d-flex justify-content-between border-bottom py-1" style="border-color: var(--border-color) !important;"><span>@item.Product.Name <span class="text-muted">x @item.Quantity</span></span><span>@(item.Product.Price * item.Quantity) ₽</span></li>}</ul><div class="text-end mt-2 fw-bold fs-5 text-success">Итого: @order.TotalPrice ₽</div></div>
-                                </div>
-                            </div>
+                            <div class="card-body"><div class="row"><div class="col-md-4 mb-2"><h6 class="text-uppercase text-muted small fw-bold">Клиент</h6><div class="d-flex align-items-center mb-1"><i class="bi bi-person-fill me-2 text-muted"></i><span class="fw-bold">@order.CustomerName</span></div><div class="d-flex align-items-center mb-1"><i class="bi bi-telephone-fill me-2 text-muted"></i><span class="small">@order.CustomerPhone</span></div><div class="d-flex align-items-center"><i class="bi bi-geo-alt-fill me-2 text-muted"></i><span class="small">@order.CustomerAddress</span></div></div><div class="col-md-8"><h6 class="text-uppercase text-muted small fw-bold">Товары</h6><ul class="list-unstyled mb-0">@foreach(var item in order.Items){<li class="d-flex justify-content-between border-bottom py-1" style="border-color: var(--border-color) !important;"><span>@item.Product.Name <span class="text-muted">x @item.Quantity</span></span><span>@(item.Product.Price * item.Quantity) ₽</span></li>}</ul><div class="text-end mt-2 fw-bold fs-5 text-success">Итого: @order.TotalPrice ₽</div></div></div></div>
                        </div>
                     }
                 }
             </div>
             <div class="col-12 mt-5">
                 <h5 class="text-muted mb-3">История (@completedOrders.Count())</h5>
-                 @foreach(var order in completedOrders.OrderByDescending(o => o.OrderDate))
-                 {
-                    <div class="card rounded-4 mb-2 p-3 opacity-75" style="background-color: var(--bg-main);">
-                        <div class="d-flex justify-content-between align-items-center">
-                             <span><i class="bi bi-check-circle-fill text-secondary me-2"></i>Заказ #@order.Id <span class="text-muted">(@order.CustomerName)</span></span>
-                             <span class="fw-bold">@order.TotalPrice ₽</span>
-                        </div>
-                    </div>
-                 }
+                @if(!completedOrders.Any())
+                {
+                    <div class="card p-3 text-center text-muted border-dashed">Архив заказов пуст</div>
+                }
+                else 
+                {
+                    @foreach(var order in completedOrders)
+                    {
+                       <div class="card rounded-4 mb-2 p-3 opacity-75" style="background-color: var(--bg-main);"><div class="d-flex justify-content-between align-items-center"><span><i class="bi bi-check-circle-fill text-secondary me-2"></i>Заказ #@order.Id <span class="text-muted">(@order.CustomerName)</span></span><span class="fw-bold">@order.TotalPrice ₽</span></div></div>
+                    }
+                }
             </div>
         </div>
     }
@@ -216,7 +128,6 @@
     private Product newProduct = new() { CategoryId = 1, Price = 100 };
     private string newCategoryName = "";
     private string? errorMessage = null;
-    
     private IBrowserFile? uploadedFile;
     private string? uploadedImageName;
     private bool isDragActive = false;
@@ -224,48 +135,15 @@
 
     private void HandleAddCategory() { if (!string.IsNullOrWhiteSpace(newCategoryName)) { Store.AddCategory(newCategoryName); newCategoryName = ""; } }
     private void HandleFileSelected(InputFileChangeEventArgs e) { uploadedFile = e.File; uploadedImageName = e.File.Name; imageUrlInput = ""; isDragActive = false; }
-
-    // --- НАЧАТЬ РЕДАКТИРОВАНИЕ ---
-    private void StartEdit(Product p)
-    {
-        // Клонируем объект, чтобы изменения в форме не отражались в таблице до сохранения
-        newProduct = new Product 
-        {
-            Id = p.Id,
-            Name = p.Name,
-            Price = p.Price,
-            CategoryId = p.CategoryId,
-            Description = p.Description,
-            ImageUrl = p.ImageUrl
-        };
-        
-        // Очищаем поля загрузки, так как фото уже есть
-        uploadedFile = null;
-        uploadedImageName = null;
-        imageUrlInput = "";
-    }
-
-    // --- ОТМЕНИТЬ РЕДАКТИРОВАНИЕ ---
-    private void CancelEdit()
-    {
-        newProduct = new() { CategoryId = 1, Price = 100 };
-        uploadedFile = null;
-        uploadedImageName = null;
-        imageUrlInput = "";
-    }
-
-    // --- СОХРАНИТЬ (ДОБАВИТЬ ИЛИ ОБНОВИТЬ) ---
+    private void StartEdit(Product p) { newProduct = new Product { Id = p.Id, Name = p.Name, Price = p.Price, CategoryId = p.CategoryId, Description = p.Description, ImageUrl = p.ImageUrl }; uploadedFile = null; uploadedImageName = null; imageUrlInput = ""; }
+    private void CancelEdit() { newProduct = new() { CategoryId = 1, Price = 100 }; uploadedFile = null; uploadedImageName = null; imageUrlInput = ""; }
     private async Task HandleSubmitProduct()
     {
         errorMessage = null;
         try
         {
             if (newProduct.Price <= 0) { errorMessage = "Цена > 0"; return; }
-
-            // Логика картинки
-            string finalImageUrl = newProduct.ImageUrl; // По умолчанию оставляем старую (для редактирования)
-
-            // Если загрузили новый файл - меняем
+            string finalImageUrl = newProduct.ImageUrl;
             if (uploadedFile != null)
             {
                 if (uploadedFile.Size > 5 * 1024 * 1024) { errorMessage = "Файл > 5 МБ"; return; }
@@ -277,30 +155,10 @@
                 await uploadedFile.OpenReadStream(5*1024*1024).CopyToAsync(fs);
                 finalImageUrl = $"/images/{name}";
             }
-            // Если файла нет, но ввели ссылку - меняем
-            else if (!string.IsNullOrWhiteSpace(imageUrlInput))
-            {
-                finalImageUrl = imageUrlInput;
-            }
-            // Если ничего не меняли, и это НОВЫЙ товар - ставим заглушку
-            else if (newProduct.Id == 0)
-            {
-                finalImageUrl = "https://placehold.co/600x400?text=No+Image";
-            }
-
+            else if (!string.IsNullOrWhiteSpace(imageUrlInput)) { finalImageUrl = imageUrlInput; }
+            else if (newProduct.Id == 0) { finalImageUrl = ImageGenerator.GenerateSvgPlaceholder("Нет фото", "#cccccc", "#666666"); }
             newProduct.ImageUrl = finalImageUrl;
-
-            // ВЫБОР ДЕЙСТВИЯ
-            if (newProduct.Id == 0)
-            {
-                Store.AddProduct(newProduct);
-            }
-            else
-            {
-                Store.UpdateProduct(newProduct);
-            }
-
-            // Сброс формы
+            if (newProduct.Id == 0) { Store.AddProduct(newProduct); } else { Store.UpdateProduct(newProduct); }
             CancelEdit();
         }
         catch (Exception ex) { errorMessage = $"Ошибка: {ex.Message}"; }

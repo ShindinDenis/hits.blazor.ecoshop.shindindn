@@ -15,7 +15,7 @@ namespace EcoShop.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.0-preview.3.24172.4");
 
             modelBuilder.Entity("EcoShop.Models.Category", b =>
                 {
@@ -140,8 +140,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 1,
                             CategoryId = 2,
-                            Description = "100% биоразлагаемая ручка. Угольное напыление.",
-                            ImageUrl = "https://placehold.co/600x400/81c784/ffffff?text=Бамбуковая+щетка",
+                            Description = "100% биоразлагаемая ручка.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyM4MWM3ODQnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyNmZmZmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0JHQsNC80LHRg9C60L7QstCw0Y8g0YnQtdGC0LrQsAogICAgICAgICAgICAgICAgICAgIDwvdGV4dD4KICAgICAgICAgICAgICAgIDwvc3ZnPg==",
                             Name = "Бамбуковая зубная щетка",
                             Price = 250m
                         },
@@ -149,8 +149,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
-                            Description = "Экономичный и натуральный. Хватает на 3 месяца.",
-                            ImageUrl = "https://placehold.co/600x400/ba68c8/ffffff?text=Твердый+шампунь",
+                            Description = "Экономичный и натуральный.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNiYTY4YzgnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyNmZmZmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0KLQstC10YDQtNGL0Lkg0YjQsNC80L/Rg9C90YwKICAgICAgICAgICAgICAgICAgICA8L3RleHQ+CiAgICAgICAgICAgICAgICA8L3N2Zz4=",
                             Name = "Твердый шампунь",
                             Price = 380m
                         },
@@ -158,8 +158,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            Description = "Кристалл алунит. Без запаха и пятен.",
-                            ImageUrl = "https://placehold.co/600x400/f8bbd0/ffffff?text=Дезодорант",
+                            Description = "Кристалл алунит. Без запаха.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNmOGJiZDAnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyMzMzMnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0JTQtdC30L7QtNC+0YDQsNC90YIKICAgICAgICAgICAgICAgICAgICA8L3RleHQ+CiAgICAgICAgICAgICAgICA8L3N2Zz4=",
                             Name = "Натуральный дезодорант",
                             Price = 550m
                         },
@@ -167,8 +167,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            Description = "Для мягкого очищения лица. 100% растительный.",
-                            ImageUrl = "https://placehold.co/600x400/26a69a/ffffff?text=Спонж",
+                            Description = "100% растительный.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyMyNmE2OWEnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyNmZmZmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0KHQv9C+0L3QtgogICAgICAgICAgICAgICAgICAgIDwvdGV4dD4KICAgICAgICAgICAgICAgIDwvc3ZnPg==",
                             Name = "Спонж Конняку",
                             Price = 300m
                         },
@@ -176,8 +176,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 5,
                             CategoryId = 1,
-                            Description = "Прочный органический хлопок. Выдерживает 15 кг.",
-                            ImageUrl = "https://placehold.co/600x400/d7ccc8/5d4037?text=Эко-сумка",
+                            Description = "Прочный органический хлопок.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNkN2NjYzgnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyM1ZDQwMzcnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0K3QutC+LdGB0YPQvNC60LAKICAgICAgICAgICAgICAgICAgICA8L3RleHQ+CiAgICAgICAgICAgICAgICA8L3N2Zz4=",
                             Name = "Эко-сумка (Шоппер)",
                             Price = 500m
                         },
@@ -185,8 +185,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 6,
                             CategoryId = 1,
-                            Description = "Стильная, держит тепло 2 часа. Стекло и пробка.",
-                            ImageUrl = "https://placehold.co/600x400/4fc3f7/ffffff?text=Термокружка",
+                            Description = "Стильная, держит тепло 2 часа.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyM0ZmMzZjcnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyNmZmZmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0KLQtdGA0LzQvtC60YDRg9C20LrQsAogICAgICAgICAgICAgICAgICAgIDwvdGV4dD4KICAgICAgICAgICAgICAgIDwvc3ZnPg==",
                             Name = "Термокружка KeepCup",
                             Price = 1200m
                         },
@@ -194,8 +194,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 7,
                             CategoryId = 1,
-                            Description = "Набор 4 шт + ершик. Нержавеющая сталь.",
-                            ImageUrl = "https://placehold.co/600x400/cfd8dc/455a64?text=Трубочки",
+                            Description = "Набор 4 шт + ершик.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNjZmQ4ZGMnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyM0NTVhNjQnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0KLRgNGD0LHQvtGH0LrQuAogICAgICAgICAgICAgICAgICAgIDwvdGV4dD4KICAgICAgICAgICAgICAgIDwvc3ZnPg==",
                             Name = "Металлические трубочки",
                             Price = 600m
                         },
@@ -203,8 +203,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 8,
                             CategoryId = 1,
-                            Description = "Замена пищевой пленке. Хлопок + пчелиный воск.",
-                            ImageUrl = "https://placehold.co/600x400/ffecb3/ff6f00?text=Салфетки",
+                            Description = "Замена пищевой пленке.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNmZmVjYjMnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyNmZjZmMDAnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0KHQsNC70YTQtdGC0LrQuAogICAgICAgICAgICAgICAgICAgIDwvdGV4dD4KICAgICAgICAgICAgICAgIDwvc3ZnPg==",
                             Name = "Восковые салфетки",
                             Price = 800m
                         },
@@ -212,8 +212,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 9,
                             CategoryId = 3,
-                            Description = "Запеченные мюсли с орехами и медом. Без сахара.",
-                            ImageUrl = "https://placehold.co/600x400/ffcc80/e65100?text=Гранола",
+                            Description = "Запеченные мюсли с орехами.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNmZmNjODAnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyNlNjUxMDAnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0JPRgNCw0L3QvtC70LAKICAgICAgICAgICAgICAgICAgICA8L3RleHQ+CiAgICAgICAgICAgICAgICA8L3N2Zz4=",
                             Name = "Гранола домашняя",
                             Price = 450m
                         },
@@ -221,8 +221,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 10,
                             CategoryId = 3,
-                            Description = "Японский зеленый чай высшего сорта. Бодрит.",
-                            ImageUrl = "https://placehold.co/600x400/66bb6a/ffffff?text=Матча",
+                            Description = "Японский зеленый чай.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyM2NmJiNmEnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyNmZmZmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0JzQsNGC0YfQsAogICAgICAgICAgICAgICAgICAgIDwvdGV4dD4KICAgICAgICAgICAgICAgIDwvc3ZnPg==",
                             Name = "Чай Матча (Matcha)",
                             Price = 990m
                         },
@@ -230,8 +230,8 @@ namespace EcoShop.Migrations
                         {
                             Id = 11,
                             CategoryId = 3,
-                            Description = "Extra Virgin. Для жарки и косметических целей.",
-                            ImageUrl = "https://placehold.co/600x400/ffffff/333333?text=Масло",
+                            Description = "Extra Virgin.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNmZmZmZmYnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyMzMzMnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0JzQsNGB0LvQvgogICAgICAgICAgICAgICAgICAgIDwvdGV4dD4KICAgICAgICAgICAgICAgIDwvc3ZnPg==",
                             Name = "Кокосовое масло",
                             Price = 700m
                         },
@@ -239,9 +239,9 @@ namespace EcoShop.Migrations
                         {
                             Id = 12,
                             CategoryId = 3,
-                            Description = "Нейлоновый мешочек для фильтрации молока.",
-                            ImageUrl = "https://placehold.co/600x400/e0e0e0/333333?text=Мешочек",
-                            Name = "Мешочек для орехового молока",
+                            Description = "Нейлоновый мешочек.",
+                            ImageUrl = "data:image/svg+xml;base64,CiAgICAgICAgICAgICAgICA8c3ZnIHdpZHRoPSc2MDAnIGhlaWdodD0nNDAwJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgogICAgICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNlMGUwZTAnLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSc1MCUnIHk9JzUwJScgZm9udC1mYW1pbHk9J01vbnRzZXJyYXQsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNjAnIGZpbGw9JyMzMzMnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIGZvbnQtd2VpZ2h0PSdib2xkJz4KICAgICAgICAgICAgICAgICAgICAgICAg0JzQtdGI0L7Rh9C10LoKICAgICAgICAgICAgICAgICAgICA8L3RleHQ+CiAgICAgICAgICAgICAgICA8L3N2Zz4=",
+                            Name = "Мешочек для молока",
                             Price = 350m
                         });
                 });
